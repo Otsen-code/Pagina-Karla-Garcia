@@ -7,8 +7,8 @@
    Cada video es un bloque { ... } con estos campos:
 
    marca      → nombre que aparece en la etiqueta rosada
-   texto_en   → descripción en inglés
-   texto_es   → descripción en español
+   texto_en   → descripción en inglés (idioma con el que abre la página)
+   texto_es   → descripción en español (se ve al pulsar el botón ES)
    archivo    → ruta del video .mp4 dentro de la carpeta videos/
    portada    → (opcional) imagen que se ve antes de darle play.
                 Si la borras o la dejas en "", se usa
@@ -52,7 +52,7 @@ const VIDEOS = [
   },
   {
     marca: "ARENA",
-    texto_en: "Wellness - Spanish",
+    texto_en: "Wellness - Español",
     texto_es: "Bienestar - Español",
     archivo: "videos/arena.mp4",
     portada: "assets/img/poster-arena.jpg",

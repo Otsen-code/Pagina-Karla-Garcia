@@ -118,6 +118,7 @@ a{color:inherit}
 .work{padding:6rem 0 7rem}
 .work .sec-title .my{font-family:"Mrs Saint Delafield",cursive;font-weight:400;font-size:1.35em;color:#111;line-height:.6}
 .work .sec-title .big{display:inline;margin-left:0;font-size:.85em}
+.work .sec-title .my{margin-right:.12em}
 .filters{display:flex;flex-wrap:wrap;gap:.5rem;margin:2.4rem 0 2.8rem}
 .filters button{border:1.5px solid var(--ink);background:none;color:var(--ink);font:500 .85rem "DM Sans";padding:.4rem 1rem;border-radius:99px;cursor:pointer;transition:background .25s,color .25s}
 .filters button.on,.filters button:hover{background:var(--ink);color:var(--bg)}
@@ -220,7 +221,7 @@ a{color:inherit}
     <a href="#services" data-i18n="nav_services">Services</a>
     <a href="#work" data-i18n="nav_work">Work</a>
     <a href="#contact" data-i18n="nav_contact">Contact</a>
-    <button class="lang" id="lang" aria-label="Cambiar idioma / Change language">ES</button>
+    <button class="lang" id="lang" type="button" aria-label="Cambiar a español / Switch to Spanish">ES</button>
   </nav>
 </header>
 
@@ -230,7 +231,7 @@ a{color:inherit}
     <div>
       <h1 class="rv split">KARLA<br>GARCIA</h1>
       <div class="sub rv" style="--d:.15s">
-        UGC<br>PORTFOLIO
+        <span data-i18n="hero_sub">UGC<br>PORTFOLIO</span>
         <div class="stars" aria-hidden="true">
           <img class="float" src="assets/img/star-silver.png" alt="">
           <img class="float" style="--fd:-1.5s" src="assets/img/star-pink.png" alt="">
@@ -259,7 +260,7 @@ a{color:inherit}
   <section class="services" id="services">
     <div class="wrap">
       <div>
-        <h2 class="sec-title rv"><span class="my">MY</span><span class="big split" data-i18n="services_t">SERVICES</span></h2>
+        <h2 class="sec-title rv"><span class="my" data-i18n="my_caps">MY</span><span class="big split" data-i18n="services_t">SERVICES</span></h2>
         <ul class="svc-list">
           <li class="rv" style="--d:.05s">UNBOXING</li>
           <li class="rv" style="--d:.1s">GRWM</li>
@@ -279,14 +280,14 @@ a{color:inherit}
 
   <!-- WORK -->
   <section class="wrap work" id="work">
-    <h2 class="sec-title rv"><span class="my">My</span><span class="big split" data-i18n="work_t">WORK</span></h2>
+    <h2 class="sec-title rv"><span class="my" data-i18n="my_script">My</span><span class="big split" data-i18n="work_t">WORK</span></h2>
 
     <div class="filters rv" id="filters">
       <button class="on" data-f="all" data-i18n="f_all">All</button>
       <button data-f="beauty" data-i18n="f_beauty">Beauty &amp; skincare</button>
       <button data-f="lifestyle" data-i18n="f_life">Lifestyle</button>
       <button data-f="tech" data-i18n="f_tech">Tech</button>
-      <button data-f="es" data-i18n="f_es">En español</button>
+      <button data-f="es" data-i18n="f_es">Spanish</button>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -310,7 +311,7 @@ a{color:inherit}
           <span class="ico ig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg></span>
         </a>
       </div>
-      <p class="copy">© <span id="yr"></span> Karla García · UGC Creator</p>
+      <p class="copy">© <span id="yr"></span> Karla García · <span data-i18n="copy">UGC Creator</span></p>
     </div>
   </section>
 </main>
@@ -349,32 +350,39 @@ function splitLetters(){
   });
 }
 
-/* ---------- translations ---------- */
+/* ---------- idioma: siempre abre en inglés; el botón cambia a español y viceversa ---------- */
 const ES = {
   nav_about:"Sobre mí", nav_services:"Servicios", nav_work:"Trabajos", nav_contact:"Contacto",
+  hero_sub:"UGC<br>PORTAFOLIO",
   tag:"Creadora UGC bilingüe · Belleza, moda y estilo de vida · Inglés y español",
   cta:"Ver mi trabajo",
   about1:"Como creadora UGC bilingüe, me especializo en producir videos auténticos de belleza, moda y estilo de vida en inglés y español.",
   about2:"Mi enfoque es simple: combinar una estética limpia con guiones intencionales para convertir demostraciones de productos cotidianos en recomendaciones de una amiga de confianza, creando conexiones reales que impulsan a la acción.",
+  my_caps:"MIS", my_script:"Mis",
   services_t:"SERVICIOS", s3:"TESTIMONIOS", s4:"UN DÍA CONMIGO", s5:"PROBLEMA - SOLUCIÓN", s6:"DEMOS DE PRODUCTO",
   work_t:"TRABAJOS", f_all:"Todos", f_beauty:"Belleza y skincare", f_life:"Estilo de vida", f_tech:"Tecnología", f_es:"En español",
-  c1:"Conectemos<br>&amp;", c2:"colaboremos"
+  c1:"Conectemos<br>&amp;", c2:"colaboremos",
+  copy:"Creadora UGC", soon:"Video próximamente"
 };
-const EN = {};
-document.querySelectorAll("[data-i18n]").forEach(el => EN[el.dataset.i18n] = el.innerHTML);
 let lang = "en";
-try { lang = localStorage.getItem("kg-lang") || (navigator.language.startsWith("es") ? "es" : "en"); } catch(e){}
+const EN = {};
 function setLang(l){
-  lang = l; const dict = l === "es" ? ES : EN;
+  lang = l;
+  const dict = l === "es" ? ES : EN;
   document.documentElement.lang = l;
-  document.querySelectorAll("[data-i18n]").forEach(el => { if (dict[el.dataset.i18n]) el.innerHTML = dict[el.dataset.i18n]; });
-  document.querySelectorAll(".desc").forEach(p => p.textContent = p.dataset[l]);
-  document.getElementById("lang").textContent = l === "es" ? "EN" : "ES";
-  try { localStorage.setItem("kg-lang", l); } catch(e){}
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.dataset.i18n;
+    if (!(k in EN)) EN[k] = el.dataset.orig || el.innerHTML;
+    if (dict[k] !== undefined) el.innerHTML = dict[k];
+  });
+  document.querySelectorAll(".desc").forEach(p => p.textContent = p.dataset[l] || p.dataset.en);
+  const btn = document.getElementById("lang");
+  btn.textContent = l === "es" ? "EN" : "ES";
+  btn.setAttribute("aria-label", l === "es" ? "Switch to English" : "Cambiar a español");
   splitLetters();
 }
-document.getElementById("lang").onclick = () => setLang(lang === "es" ? "en" : "es");
-if (lang === "es") setLang("es"); else splitLetters();
+document.getElementById("lang").addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
+splitLetters();
 
 /* ---------- video players ---------- */
 const PLAY = '<svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg>';
@@ -384,7 +392,7 @@ clips.forEach(c => {
   v.playsInline = true; v.loop = true; v.setAttribute("playsinline","");
   if (c.dataset.poster) { v.poster = c.dataset.poster; v.preload = "none"; v.src = c.dataset.src; }
   else { v.preload = "metadata"; v.src = c.dataset.src + "#t=0.1"; }  // sin portada: muestra el primer cuadro
-  c.innerHTML = `<div class="play"><span>${PLAY}</span></div><button class="mute" type="button">🔊</button><div class="bar-p"></div><div class="soon">${document.documentElement.lang==="es"?"Video próximamente":"Video coming soon"}</div>`;
+  c.innerHTML = `<div class="play"><span>${PLAY}</span></div><button class="mute" type="button">🔊</button><div class="bar-p"></div><div class="soon" data-i18n="soon">Video coming soon</div>`;
   c.prepend(v);
   const bar = c.querySelector(".bar-p"), mute = c.querySelector(".mute");
   v.addEventListener("timeupdate", () => { if (v.duration) bar.style.width = (v.currentTime / v.duration * 100) + "%"; });
